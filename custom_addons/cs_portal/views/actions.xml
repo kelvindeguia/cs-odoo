@@ -1,0 +1,349 @@
+<odoo>
+
+    <!--    Action for Clients Menu-->
+    <record id="cs_portal_clients_action" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.main</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_my_accounts': 1}</field>
+    </record>
+
+    <!--    Action for Account Owner-->
+    <record id="cs_portal_account_owner_action" model="ir.actions.act_window">
+        <field name="name">Account Owner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.account.owner</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Secondary Owner-->
+    <record id="cs_portal_secondary_owner_action" model="ir.actions.act_window">
+        <field name="name">Secondary Owner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.secondary.owner</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Tags Menu-->
+    <record id="cs_portal_tags_action" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.tag</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Contract Length-->
+    <record id="cs_portal_contract_length_action" model="ir.actions.act_window">
+        <field name="name">Contract Length</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.contract.length</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Primary HR POC -->
+    <record id="cs_portal_primary_hr_poc_action" model="ir.actions.act_window">
+        <field name="name">Primary HR POC</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.primary.hr.poc</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for POC Information-->
+    <record id="cs_portal_poc_information_action" model="ir.actions.act_window">
+        <field name="name">POC Information</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.poc.information</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Projects and Client Request-->
+    <record id="cs_portal_projects_and_client_request_action" model="ir.actions.act_window">
+        <field name="name">Client Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.projects.and.client.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Projects and Client Request Category-->
+    <record id="cs_portal_projects_and_client_request_category_action" model="ir.actions.act_window">
+        <field name="name">Client Request Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.projects.and.client.request.category</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Opportunities-->
+    <record id="cs_portal_opportunities_action" model="ir.actions.act_window">
+        <field name="name">Revenue Opportunities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.opportunities</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Account Planning-->
+    <record id="cs_portal_account_planning_action" model="ir.actions.act_window">
+        <field name="name">Account Planning</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.account.planning</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Client Escalations-->
+    <record id="cs_portal_client_escalations_action" model="ir.actions.act_window">
+        <field name="name">Client Escalations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.client.escalations</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for CSAT-->
+    <record id="cs_portal_csat_action" model="ir.actions.act_window">
+        <field name="name">CSAT</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.csat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Requisition-->
+    <record id="cs_portal_requisition_action" model="ir.actions.act_window">
+        <field name="name">Requisition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.requisition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Requisition Existing Roles-->
+    <record id="cs_portal_requisition_existing_roles_action" model="ir.actions.act_window">
+        <field name="name">Existing Roles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.requisition.existing.roles</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Client Interactions-->
+    <record id="cs_portal_client_interactions_action" model="ir.actions.act_window">
+        <field name="name">Client Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.client.interactions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Client Interactions Type of Interactions-->
+    <record id="cs_portal_client_interactions_type_action" model="ir.actions.act_window">
+        <field name="name">Type of Client Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.client.interactions.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Internal Interactions-->
+    <record id="cs_portal_internal_interactions_action" model="ir.actions.act_window">
+        <field name="name">Internal Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.internal.interactions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Internal Interactions Type of Interactions-->
+    <record id="cs_portal_internal_interactions_type_action" model="ir.actions.act_window">
+        <field name="name">Type of Internal Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.internal.interactions.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Hiring Interactions-->
+    <record id="cs_portal_hiring_interactions_action" model="ir.actions.act_window">
+        <field name="name">Hiring Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.hiring.interactions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Hiring Interactions Type of Interactions-->
+    <record id="cs_portal_hiring_interactions_type_action" model="ir.actions.act_window">
+        <field name="name">Type of Hiring Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.hiring.interactions.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!--    Action for Email Interactions-->
+    <!-- <record id="cs_portal_email_interactions_action" model="ir.actions.act_window">
+        <field name="name">Email Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.email.interactions</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <!--    Action for Email Interactions Type of Interactions-->
+    <!-- <record id="cs_portal_email_interactions_type_action" model="ir.actions.act_window">
+        <field name="name">Type of Interactions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.email.interactions.type</field>
+        <field name="view_mode">tree</field>
+    </record> -->
+
+    <!--    Action for Attrition and Backfills-->
+    <record id="cs_portal_attrition_and_backfills_action" model="ir.actions.act_window">
+        <field name="name">Attrition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.attrition.and.backfills</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--        Action for RAW-->
+    <record id="cs_portal_raw_action" model="ir.actions.act_window">
+        <field name="name">Raw</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.raw</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_ids"
+            eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('cs_portal.cs_portal_raw_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('cs_portal.cs_portal_raw_form')})]" />
+        <!-- <field name="context">{}</field> -->
+    </record>
+
+    <!--        Action for CSM-->
+    <record id="cs_portal_csm_action" model="ir.actions.act_window">
+        <field name="name">CSM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.csm</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="view_ids"
+            eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('cs_portal.cs_portal_csm_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('cs_portal.cs_portal_csm_form')})]" />
+        <!-- <field name="context">{}</field> -->
+    </record>
+
+    <!--        Action for Accountable-->
+    <record id="cs_portal_accountable_action" model="ir.actions.act_window">
+        <field name="name">Accountable User</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.accountable</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="context">{}</field> -->
+    </record>
+
+    <!--    Action for Sales Pipeline Menu -->
+    <record id="cs_portal_sales_pipeline_action" model="ir.actions.act_window">
+        <field name="name">Sales Pipeline</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.main</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="cs_portal.cs_portal_sales_pipeline_kanban" />
+        <field name="context">{'search_default_my_accounts': 1}</field>
+    </record>
+
+    <!-- Action for Sales Pipeline Stages -->
+    <record id="cs_portal_sales_pipeline_stage_action" model="ir.actions.act_window">
+        <field name="name">Sales Pipeline Stages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.sales.pipeline</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for General Pipeline Menu -->
+    <record id="cs_portal_general_pipeline_action" model="ir.actions.act_window">
+        <field name="name">General Pipeline</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.main</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_my_accounts': 1}</field>
+    </record>
+
+    <!--    Action for General Pipeline Stages -->
+    <record id="cs_portal_general_pipeline_stage_action" model="ir.actions.act_window">
+        <field name="name">General Account Stages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.general.pipeline</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Log Notes Menu -->
+    <record id="cs_portal_logs_action" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.logs</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False" />
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No logs yet!
+            </p>
+            <p>
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+
+    <!--    Action for Separation Status -->
+    <record id="cs_portal_separation_status_action" model="ir.actions.act_window">
+        <field name="name">Separation Status</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.separation.status</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Reason for Separation -->
+    <record id="cs_portal_reason_for_separation_action" model="ir.actions.act_window">
+        <field name="name">Reason for Separation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.reason.for.separation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Master File -->
+    <record id="cs_portal_master_file_action" model="ir.actions.act_window">
+        <field name="name">Master File</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.master.file</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Position -->
+    <record id="cs_portal_position_action" model="ir.actions.act_window">
+        <field name="name">Position</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.position</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Growth -->
+    <record id="cs_portal_growth_action" model="ir.actions.act_window">
+        <field name="name">Growth</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.growth</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Rect to CS Target -->
+    <record id="cs_portal_rect_to_cs_target_action" model="ir.actions.act_window">
+        <field name="name">Rect to CS Target</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.rect.to.cs.target</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Active Clients -->
+    <record id="cs_portal_active_clients_action" model="ir.actions.act_window">
+        <field name="name">Active Clients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.active.clients</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    Action for Overall -->
+    <record id="cs_portal_overall_action" model="ir.actions.act_window">
+        <field name="name">Overall</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cs.portal.overall</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

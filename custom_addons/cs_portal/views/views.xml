@@ -1,0 +1,1901 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!--    ### CLIENTS START ###-->
+    <record id="cs_portal_clients_tree" model="ir.ui.view">
+        <field name="name">cs.portal.clients.tree</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="account_name" />
+                <field name="account_status" />
+                <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                <field name="secondary_owner_id" domain="[('active_secondary_owner', '=', True)]"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </tree>
+
+        </field>
+    </record>
+
+    <!-- <record id="cs_portal_clients_form" model="ir.ui.view">
+        <field name="name">cs.portal.clients.form</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h2>
+                            <label for="account_name" />
+                            <br />
+                            <field name="account_name" />
+                        </h2>
+                    </div>
+                    <hr style="height:5px;border=width:0;color:gray;background-color:gray" />
+                    <group>
+                        <group>
+                            <field name="account_status" />
+                            <field name="pipeline_stage_id" />
+                        </group>
+                        <group>
+                            <field name="revenue_last_year" widget="monetary" />
+                            <field name="ytd_revenue" widget="monetary" />
+                            <field name="expected_revenue" widget="monetary" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Account Information" id="cs_portal_main_account_information">
+                            <group>
+                                <group>
+                                    <field name="account_owner_id" />
+                                    <field name="secondary_owner_id" />
+                                    <field name="likelihood_of_growth" />
+                                    <field name="company_domain" placeholder="company.com" />
+                                    <field name="company_description" />
+                                    <field name="industry" />
+                                    <field name="company_phone_number" />
+                                    <field name="city" />
+                                    <field name="state" />
+                                    <field name="year_founded" />
+                                    <field name="contract_length_id" />
+                                    <field name="contract_expiration" />
+                                </group>
+                                <group>
+                                    <field name="primary_hr_poc_id" />
+                                    <field name="ceo" />
+                                    <field
+                                        name="number_of_employees" />
+                                    <field name="publicly_traded" />
+                                    <field
+                                        name="annual_sales_revenue" />
+                                    <field name="currency_id"
+                                        invisible="1" />1 <field name="date_line_fee"
+                                        widget="monetary" />
+                                    <field name="infrastructure_fee"
+                                        widget="monetary" />
+                                    <field name="mark_up_percentage"
+                                        widget="percentage" />
+                                    <field name="year_started_with_isw" />
+                                    <field
+                                        name="isw_headcount" />
+                                    <field name="isw_roles_position" />
+                                    <field
+                                        name="tag_ids" widget="many2many_tags"
+                                        options="{'color_field': 'color', 'no_create_edit': True}" />
+                                </group>
+                            </group>
+
+                        </page>
+                        <page name="POC Information" id="cs_portal_main_poc_information">
+                            <field name="poc_information_ids" />
+                        </page>
+                        <page name="Projects and Client Request"
+                            id="cs_portal_projects_and_client_request">
+                            <field name="projects_and_client_request_ids" />
+                        </page>
+                        <page name="Opportunities" id="cs_portal_opportunities">
+                            <field name="opportunities_ids" />
+                        </page>
+                        <page name="Client Escalations" id="cs_portal_client_escalations">
+                            <field name="client_escalations_ids" />
+                        </page>
+                        <page name="CSAT" id="cs_portal_csat">
+                            <field name="csat_ids" />
+                        </page>
+                        <page name="Requisition" id="cs_portal_requisition">
+                            <field name="requisition_ids" />
+                        </page>
+                        <page name="Interactions" id="cs_portal_interactions">
+                            <notebook>
+                                <page name="Client Interactions" id="cs_portal_client_interactions">
+                                    <field name="client_interactions_ids" />
+                                </page>
+                                <page name="Internal Interactions"
+                                    id="cs_portal_internal_interactions">
+                                    <field name="internal_interactions_ids" />
+                                </page>
+                                <page name="Hiring Interactions" id="cs_portal_hiring_interactions">
+                                    <field name="hiring_interactions_ids" />
+                                </page>
+                            </notebook>
+                        </page>
+                        <page name="Attrition and Backfills" id="cs_portal_attrition_and_backfills">
+                            <field name="attrition_and_backfills_ids" />
+                        </page>
+                        <page name="Other Notes" id="cs_portal_other_notes">
+                            <field name="other_notes" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+    <!--    ### CLIENTS END ###-->
+
+    <record id="cs_portal_clients_form" model="ir.ui.view">
+        <field name="name">cs.portal.clients.form</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet style="margin-right: -10px">
+                    <widget name="web_ribbon" title="New" invisible="general_pipeline_stage_id != 1"/>
+                    <widget name="web_ribbon" title="Pending" invisible="general_pipeline_stage_id != 2 " />
+                    <widget name="web_ribbon" title="Completed" invisible="general_pipeline_stage_id != 3" />
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                    </div>
+                    <div>
+                        <label for="account_name" />
+                        <h1>
+                            <field name="account_name" width="50%" placeholder="Required"
+                                required="1" />
+                        </h1>
+                    </div>
+                    <hr style="height:5px;border=width:0;color:gray;background-color:gray" />
+                    <group>
+                        <group string="Account Information">
+                            <field name="account_status" />
+                            <field name="sales_pipeline_stage_id" />
+                            <field name="stage_date" groups="base.group_system"/>
+                            <!-- <field name="create_date" string="Create Date" /> -->
+                            <field name="x_stage_sla"
+                            decoration-success="x_stage_sla &gt; 0"
+                            decoration-danger="x_stage_sla &gt; 20"
+                            decoration-warning="x_stage_sla &gt; 10" groups="base.group_system"/>
+                            <field name="x_stage_sla_total" groups="base.group_system" />
+                        </group>
+                        <group string="Revenue Information">
+                            <field name="revenue_last_year" widget="monetary" />
+                            <field name="ytd_revenue" widget="monetary" />
+                            <field name="expected_revenue" widget="monetary" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Account Information" id="cs_portal_main_account_information">
+                            <group>
+                                <group>
+                                    <field name="likelihood_of_growth" /> 
+                                    <field name="company_domain" placeholder="company.com" />
+                                    <field name="company_description" />
+                                    <field name="industry" />
+                                    <field name="company_phone_number" />
+                                    <field name="city" />
+                                    <field name="state" />
+                                    <field name="year_founded" />
+                                    <field name="contract_length_id" />
+                                    <field name="contract_expiration" />
+                                    <field name="sales_attachment_ids" widget="many2many_binary" />
+                                </group>
+                                <group>
+                                    <field name="ceo" />
+                                    <field name="number_of_employees" />
+                                    <field name="publicly_traded" />
+                                    <field name="annual_sales_revenue" />
+                                    <field name="currency_id" invisible="1" />1 <field name="date_line_fee" widget="monetary" />
+                                    <field name="infrastructure_fee" widget="monetary" />
+                                    <field name="mark_up_percentage" widget="percentage" />
+                                    <field name="year_started_with_isw" />
+                                    <field name="isw_headcount" />
+                                    <field name="isw_roles_position" />
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" />
+                                    <field name="account_url" groups="base.group_system"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="POC Information" id="cs_portal_main_poc_information">
+                            <field name="poc_information_ids" />
+                        </page>
+                        <page name="Client Request" id="cs_portal_projects_and_client_request" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="projects_and_client_request_ids" />
+                        </page>
+                        <page name="Revenue Opportunities" id="cs_portal_opportunities" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="opportunities_ids" />
+                        </page>
+                        <!-- <page name="Account Planning" id="cs_portal_account_planning" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user">
+                            <field name="account_planning_ids" />
+                        </page> -->
+                        <page name="Client Escalations" id="cs_portal_client_escalations" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="client_escalations_ids" />
+                        </page>
+                        <page name="CSAT" id="cs_portal_csat" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="csat_ids" />
+                        </page>
+                        <page name="Requisition" id="cs_portal_requisition" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="requisition_ids" />
+                        </page>
+                        <page name="Interactions" id="cs_portal_interactions" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <notebook>
+                                <page name="Client Interactions" id="cs_portal_client_interactions">
+                                    <field name="client_interactions_ids" />
+                                </page>
+                                <page name="Internal Interactions"
+                                    id="cs_portal_internal_interactions">
+                                    <field name="internal_interactions_ids" />
+                                </page>
+                                <!-- <page name="Email Interactions" id="cs_portal_email_interactions">
+                                    <field name="email_interactions_ids" />
+                                </page> -->
+                                <page name="Hiring Interactions" id="cs_portal_hiring_interactions">
+                                    <field name="hiring_interactions_ids"/>
+                                </page>
+                            </notebook>
+                        </page>
+                        <page name="Attrition" id="cs_portal_attrition_and_backfills" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="attrition_and_backfills_ids" />
+                        </page>
+                        <page name="Other Notes" id="cs_portal_other_notes" groups="cs_portal.group_cs_portal_manager,cs_portal.group_cs_portal_user,cs_portal.group_cs_portal_sales_access">
+                            <field name="other_notes" />
+                        </page>
+                        <page name="Overall" id="cs_portal_overall" groups="base.group_system">
+                            <field name="overall_ids" />
+                        </page>
+                        <!-- <page name="Master File" id="cs_portal_master_file">
+                            <field name="master_file_ids" />
+                        </page> -->
+                        <page name="Active Clients" id="cs_portal_active_clients" groups="base.group_system">
+                            <field name="active_clients_ids" />
+                        </page>
+                        <page name="Growth 2" id="cs_portal_growth" groups="base.group_system">
+                            <field name="growth_ids" />
+                        </page>
+                        <page name="Rect to CS Target" id="cs_portal_rect_to_cs_target" groups="base.group_system">
+                            <field name="rect_to_cs_target_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <group>
+                    <sheet style="width:500%; margin-top: 10px;">
+                        <group string="Contact Info">
+                            <field name="primary_hr_poc_id" />
+                        </group>
+                        <newline />
+                        <!-- <group>
+                            <field name="company_phone_number" string="Company phone number"/>
+                        </group> -->
+                        <hr style="height:5px; border-width:0; color:gray; background-color:gray" />
+                        <group string="Key Information">
+                            <field name="general_pipeline_stage_id" />
+                            <field name="start_date" />
+                            <field name="date_closed" />
+                            <field name="ageing" />
+                        </group>
+                        <hr style="height:5px; border-width:0; color:gray; background-color:gray" />
+                        <group string="Additional Information">
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                            <field name="secondary_owner_id" domain="[('active_secondary_owner', '=', True)]"/>
+                            <!-- <field name="priority" /> -->
+                        </group>
+                        <hr style="height:5px; border-width:0; color:gray; background-color:gray" />
+                    </sheet>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!--    ### TAGS START ###-->
+    <record id="cs_portal_tags_tree" model="ir.ui.view">
+        <field name="name">cs.portal.tags.tree</field>
+        <field name="model">cs.portal.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Tags" editable="bottom" sample="1">
+                <field name="id" />
+                <field name="name" />
+                <field name="color" widget="color_picker" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### TAGS END ###-->
+
+    <!--    ### CONTRACT LENGTH START ###-->
+    <record id="cs_portal_contract_length_tree" model="ir.ui.view">
+        <field name="name">cs.portal.contract.length.tree</field>
+        <field name="model">cs.portal.contract.length</field>
+        <field name="arch" type="xml">
+            <tree string="Contract Length" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### CONTRACT LENGTH END ###-->
+
+    <!--    ### ACCOUNT OWNER START ###-->
+    <record id="cs_portal_account_owner_tree" model="ir.ui.view">
+        <field name="name">cs.portal.account.owner.tree</field>
+        <field name="model">cs.portal.account.owner</field>
+        <field name="arch" type="xml">
+            <tree string="Account Owner" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+                <field name="account_owner_ids" />
+                <field name="user_id" />
+                <field name="active_account_owner" />
+                <field name="email_address" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### ACCOUNT OWNER END ###-->
+
+    <!--    ### SECONDARY OWNER START ###-->
+    <record id="cs_portal_secondary_owner_tree" model="ir.ui.view">
+        <field name="name">cs.portal.secondary.owner.tree</field>
+        <field name="model">cs.portal.secondary.owner</field>
+        <field name="arch" type="xml">
+            <tree string="Secondary Owner" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+                <field name="account_owner_ids" />
+                <field name="user_id" />
+                <field name="active_secondary_owner" />
+                <field name="email_address" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### SECONDARY OWNER END ###-->
+
+    <!--    ### PRIMARY HR POC START ###-->
+    <record id="cs_portal_primary_hr_poc_tree" model="ir.ui.view">
+        <field name="name">cs.portal.primary.hr.poc.tree</field>
+        <field name="model">cs.portal.primary.hr.poc</field>
+        <field name="arch" type="xml">
+            <tree string="Primary HR POC" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### PRIMARY HR POC END ###-->
+
+    <!--    ### POC INFORMATION START ###-->
+    <record id="cs_portal_poc_information_tree" model="ir.ui.view">
+        <field name="name">cs.portal.poc.information.tree</field>
+        <field name="model">cs.portal.poc.information</field>
+        <field name="arch" type="xml">
+            <tree string="POC Information" editable="bottom">
+                <field name="buyer" />
+                <field name="client_satisfaction" />
+                <field name="name" />
+                <field name="email" widget="email" />
+                <field name="position_job_title" />
+                <field name="number" />
+                <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_poc_information_form" model="ir.ui.view">
+        <field name="name">cs.portal.poc.information.form</field>
+        <field name="model">cs.portal.poc.information</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="email" widget="email" />
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        </group>
+                        <group>
+                            <field name="client_satisfaction" />
+                            <field name="number" />
+                            <field name="position_job_title" />
+                            <field name="buyer" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### POC INFORMATION END ###-->
+
+    <!--    ### PROJECTS AND CLIENT REQUEST START ###-->
+    <record id="cs_portal_projects_and_client_request_tree" model="ir.ui.view">
+        <field name="name">cs.portal.projects.and.client.request.tree</field>
+        <field name="model">cs.portal.projects.and.client.request</field>
+        <field name="arch" type="xml">
+            <tree string="Client Request">
+                <field name="date_opened" />
+                <field name="subject" />
+                <!-- <field name="deliverables" /> -->
+                <field name="client_name" />
+                <field name="client_id" />
+                <field name="account_owner_id" />
+                <field name="category_id" />
+                <field name="date_closed" />
+                <field name="status" />
+                <field name="details" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_projects_and_client_request_form" model="ir.ui.view">
+        <field name="name">cs.portal.projects.and.client.request.form</field>
+        <field name="model">cs.portal.projects.and.client.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_opened" />
+                            <field name="subject" />
+                            <!-- <field name="deliverables" /> -->
+                            <field name="client_name" />
+                            <field name="client_id" />
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        </group>
+                        <group>
+                            <field name="category_id" />
+                            <field name="date_closed" />
+                            <field name="projects_attachment_ids" widget="many2many_binary" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_projects_and_client_request_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### PROJECTS AND CLIENT REQUEST END ###-->
+
+    <!--    ### PROJECTS AND CLIENT REQUEST CATEGORY START ###-->
+    <record id="cs_portal_projects_and_client_request_category_tree" model="ir.ui.view">
+        <field name="name">cs.portal.projects.and.client.request.category.tree</field>
+        <field name="model">cs.portal.projects.and.client.request.category</field>
+        <field name="arch" type="xml">
+            <tree string="Client Request Category" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### PROJECTS AND CLIENT REQUEST CATEGORY END ###-->
+
+    <!--    ### OPPORTUNITIES START ###-->
+    <record id="cs_portal_opportunities_tree" model="ir.ui.view">
+        <field name="name">cs.portal.opportunities.tree</field>
+        <field name="model">cs.portal.opportunities</field>
+        <field name="arch" type="xml">
+            <tree string="Revenue Opportunities">
+                <field name="date_created" />
+                <field name="subject" />
+                <field name="client_name" />
+                <field name="account_owner_id" />
+                <field name="status" />
+                <field name="details" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_opportunities_form" model="ir.ui.view">
+        <field name="name">cs.portal.opportunities.form</field>
+        <field name="model">cs.portal.opportunities</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_created" />
+                            <field name="subject" />
+                            <field name="client_name" />
+                        </group>
+                        <group>
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_opportunities_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### OPPORTUNITIES END ###-->
+
+    <!--    ### ACCOUNT PLANNING START ###-->
+    <record id="cs_portal_account_planning_tree" model="ir.ui.view">
+        <field name="name">cs.portal.account.planning.tree</field>
+        <field name="model">cs.portal.account.planning</field>
+        <field name="arch" type="xml">
+            <tree string="Account Planning">
+                <field name="date_created" />
+                <field name="account_owner_id" />
+                <field name="subject" />
+                <field name="forecasting_headcount" />
+                <field name="target_revenue" />
+                <field name="trv_to_achieve" />
+                <field name="goals_and_objectives" />
+                <field name="course_of_action" />
+                <field name="due_date" />
+                <field name="status" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_account_planning_form" model="ir.ui.view">
+        <field name="name">cs.portal.account.planning.form</field>
+        <field name="model">cs.portal.account.planning</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_created" />
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                            <field name="subject" />
+                            <field name="forecasting_headcount" />
+                        </group>
+                        <group>
+                            <field name="target_revenue" />
+                            <field name="trv_to_achieve" />
+                            <field name="due_date" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Goals" id="cs_portal_account_planning_form_goals_and_objs">
+                            <field name="goals_and_objectives" />
+                        </page>
+                        <page name="Actions" id="cs_portal_account_planning_form_course_of_action">
+                            <field name="course_of_action" />
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page name="Logs" id="cs_portal_account_planning_form_logs">
+                            <field name="ap_logs_ids" readonly="1" force_save="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### ACCOUNT PLANNING END ###-->
+
+    <!--    ### CLIENT ESCALATIONS START ###-->
+    <record id="cs_portal_client_escalations_tree" model="ir.ui.view">
+        <field name="name">cs.portal.client.escalations.tree</field>
+        <field name="model">cs.portal.client.escalations</field>
+        <field name="arch" type="xml">
+            <tree string="Client Escalations">
+                <field name="date_opened" />
+                <field name="client_name" />
+                <field name="participants" />
+                <field name="department" />
+                <field name="reason" />
+                <field name="date_closed" />
+                <field name="account_owner_id" />
+                <field name="status" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_client_escalations_form" model="ir.ui.view">
+        <field name="name">cs.portal.client.escalations.form</field>
+        <field name="model">cs.portal.client.escalations</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_opened" />
+                            <field name="client_name" />
+                            <field name="participants" />
+                            <field name="department" />
+                            <field name="reason" />
+                        </group>
+                        <group>
+                            <field name="date_closed" />
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                            <field name="client_escalations_attachment_ids"
+                                widget="many2many_binary" />
+                            <field name="status" />
+                        </group>
+                        <notebook>
+                            <page name="Details" id="cs_portal_client_escalations_form_details">
+                                <field name="description" />
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### CLIENT ESCALATIONS END ###-->
+
+    <!--    ### CSAT START ###-->
+    <record id="cs_portal_csat_tree" model="ir.ui.view">
+        <field name="name">cs.portal.csat.tree</field>
+        <field name="model">cs.portal.csat</field>
+        <field name="arch" type="xml">
+            <tree string="CSAT">
+                <field name="date_submitted" />
+                <field name="subject" />
+                <field name="submitted_by" />
+                <!-- <field name="client_name" /> -->
+                <field name="satisfaction_rating" />
+                <field name="details" />
+                <field name="account_owner_id" />
+                <field name="status" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_csat_form" model="ir.ui.view">
+        <field name="name">cs.portal.csat.form</field>
+        <field name="model">cs.portal.csat</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_submitted" />
+                            <field name="subject" />
+                            <field name="submitted_by" />
+                            <!-- <field name="client_name" /> -->
+                            <field name="satisfaction_rating" />
+                        </group>
+                        <group>
+                            <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                            <field name="csat_attachment_ids"
+                                widget="many2many_binary" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_csat_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### CSAT END ###-->
+
+    <!--    ### REQUISITION START ###-->
+    <record id="cs_portal_requisition_tree" model="ir.ui.view">
+        <field name="name">cs.portal.requisition.tree</field>
+        <field name="model">cs.portal.requisition</field>
+        <field name="arch" type="xml">
+            <tree string="Requisition">
+                <field name="job_title_role" />
+                <field name="date_opened" />
+                <field name="req_id" />
+                <!-- <field name="growth" /> -->
+                <field name="position_classification" />
+                <field name="req_status" />
+                <field name="backfill" />
+                <field name="headcount" />
+                <field name="existing_roles_id" />
+                <!-- <field name="account_owner_id" /> -->
+                <field name="salary_range_budget" />
+                <field name="date_closed" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_requisition_form" model="ir.ui.view">
+        <field name="name">cs.portal.requisition.form</field>
+        <field name="model">cs.portal.requisition</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="job_title_role" />
+                            <field name="date_opened" />
+                            <field name="req_id" />
+                            <!-- <field name="growth" /> -->
+                            <field name="position_classification" />
+                            <field name="req_status" />
+                            <field name="backfill" />
+                            <field name="headcount" />
+                            <field name="existing_roles_id" />
+                            <field name="salary_range_budget" />
+                            <field name="date_closed" />
+                            <field name="requisition_attachment_ids" widget="many2many_binary" />
+                        </group>
+                        <group>
+                            <!-- <field name="account_owner_id" /> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Remarks" id="cs_portal_requisition_form_remarks">
+                            <field name="remarks" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### REQUISITION END ###-->
+
+    <!--    ### REQUISITION EXISTING ROLES START ###-->
+    <record id="cs_portal_requisition_existing_roles_tree" model="ir.ui.view">
+        <field name="name">cs.portal.requisition.existing.roles.tree</field>
+        <field name="model">cs.portal.requisition.existing.roles</field>
+        <field name="arch" type="xml">
+            <tree string="Existing Roles" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### REQUISITION EXISTING ROLES END ###-->
+
+    <!--    ### CLIENT INTERACTIONS START ###-->
+    <record id="cs_portal_client_interactions_tree" model="ir.ui.view">
+        <field name="name">cs.portal.client.interactions.tree</field>
+        <field name="model">cs.portal.client.interactions</field>
+        <field name="arch" type="xml">
+            <tree string="Client Interactions">
+                <!-- <button string="Add" type="object" name="add_client_interactions_line" class="oe_highlight"/> -->
+                <field name="date" />
+                <field name="deliverables" />
+                <field name="participants" />
+                <field name="type_of_interactions_id" />
+                <field name="status" />
+                <field name="details" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_client_interactions_form" model="ir.ui.view">
+        <field name="name">cs.portal.client.interactions.form</field>
+        <field name="model">cs.portal.client.interactions</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" />
+                            <field name="deliverables" />
+                            <field name="participants" />
+                            <field name="escalation" />
+                        </group>
+                        <group>
+                            <field name="type_of_interactions_id" />
+                            <field name="status" />
+                            <field name="interactions_attachment_ids" widget="many2many_binary" />
+                            <field name="reminder" />
+                            <field name="task_reminder" />
+                            <field name="date_today" invisible="1"/>
+                            <field name="task_ageing" invisible="1"/>
+                            <field name="task_ageing_total" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_client_interactions_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### CLIENT INTERACTIONS END ###-->
+
+    <!--    ### CLIENT INTERACTIONS TYPE OF INTERACTIONS START ###-->
+    <record id="cs_portal_client_interactions_type_tree" model="ir.ui.view">
+        <field name="name">cs.portal.client.interactions.type.tree</field>
+        <field name="model">cs.portal.client.interactions.type</field>
+        <field name="arch" type="xml">
+            <tree string="Type of Interactions" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### CLIENT INTERACTIONS TYPE OF INTERACTIONS END ###-->
+
+    <!--    ### INTERNAL INTERACTIONS START ###-->
+    <record id="cs_portal_internal_interactions_tree" model="ir.ui.view">
+        <field name="name">cs.portal.internal.interactions.tree</field>
+        <field name="model">cs.portal.internal.interactions</field>
+        <field name="arch" type="xml">
+            <tree string="Internal Interactions">
+                <field name="date" />
+                <field name="deliverables" />
+                <field name="participants" />
+                <field name="type_of_interactions_id" />
+                <field name="start_time" />
+                <field name="end_time" />
+                <field name="status" />
+                <field name="details" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_internal_interactions_form" model="ir.ui.view">
+        <field name="name">cs.portal.internal.interactions.form</field>
+        <field name="model">cs.portal.internal.interactions</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" />
+                            <field name="deliverables" />
+                            <field name="participants" />
+                            <field name="type_of_interactions_id" />
+                        </group>
+                        <group>
+                            <field name="start_time" />
+                            <field name="end_time" />
+                            <field name="internal_interactions_attachment_ids"
+                                widget="many2many_binary" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_internal_interactions_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### INTERNAL INTERACTIONS END ###-->
+
+    <!--    ### INTERNAL INTERACTIONS TYPE OF INTERACTIONS START ###-->
+    <record id="cs_portal_internal_interactions_type_tree" model="ir.ui.view">
+        <field name="name">cs.portal.internal.interactions.type.tree</field>
+        <field name="model">cs.portal.internal.interactions.type</field>
+        <field name="arch" type="xml">
+            <tree string="Type of Interactions" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--    ### INTERNAL INTERACTIONS TYPE OF INTERACTIONS END ###-->
+
+    <!--    ### HIRING INTERACTIONS START ###-->
+    <record id="cs_portal_hiring_interactions_tree" model="ir.ui.view">
+        <field name="name">cs.portal.hiring.interactions.tree</field>
+        <field name="model">cs.portal.hiring.interactions</field>
+        <field name="arch" type="xml">
+            <tree string="Hiring Interactions">
+                <field name="date"/>
+                <field name="deliverables"/>
+                <field name="participants"/>
+                <field name="type_of_interactions_id"/>
+                <field name="status" />
+                <field name="details"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_hiring_interactions_form" model="ir.ui.view">
+        <field name="name">cs.portal.hiring.interactions.form</field>
+        <field name="model">cs.portal.hiring.interactions</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="deliverables"/>
+                            <field name="participants"/>
+                        </group>
+                        <group>
+                            <field name="type_of_interactions_id"/>
+                            <field name="hiring_interactions_attachment_ids" widget="many2many_binary"/>
+                            <field name="status" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_hiring_interactions_form_details">
+                            <field name="details"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### HIRING INTERACTIONS END ###-->
+
+    <!--    ### HIRING INTERACTIONS TYPE OF INTERACTIONS START ###-->
+    <record id="cs_portal_hiring_interactions_type_tree" model="ir.ui.view">
+        <field name="name">cs.portal.hiring.interactions.type.tree</field>
+        <field name="model">cs.portal.hiring.interactions.type</field>
+        <field name="arch" type="xml">
+            <tree string="Type of Interactions" editable="bottom">
+                <field name="id"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <!--    ### HIRING INTERACTIONS TYPE OF INTERACTIONS END ###-->
+
+    <!--    ### EMAIL INTERACTIONS START ###-->
+    <!-- <record id="cs_portal_email_interactions_tree" model="ir.ui.view">
+        <field name="name">cs.portal.email.interactions.tree</field>
+        <field name="model">cs.portal.email.interactions</field>
+        <field name="arch" type="xml">
+            <tree string="Email Interactions">
+                <field name="date" />
+                <field name="deliverables" />
+                <field name="participants" />
+                <field name="type_of_interactions_id" />
+                <field name="status" />
+                <field name="details" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_email_interactions_form" model="ir.ui.view">
+        <field name="name">cs.portal.email.interactions.form</field>
+        <field name="model">cs.portal.email.interactions</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" />
+                            <field name="deliverables" />
+                            <field name="participants" />
+                        </group>
+                        <group>
+                            <field name="type_of_interactions_id" />
+                            <field name="status" />
+                            <field name="email_interactions_attachment_ids"
+                                widget="many2many_binary" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Details" id="cs_portal_email_interactions_form_details">
+                            <field name="details" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+    <!--    ### EMAIL INTERACTIONS END ###-->
+
+    <!--    ### EMAIL INTERACTIONS TYPE OF INTERACTIONS START ###-->
+    <!-- <record id="cs_portal_email_interactions_type_tree" model="ir.ui.view">
+        <field name="name">cs.portal.email.interactions.type.tree</field>
+        <field name="model">cs.portal.email.interactions.type</field>
+        <field name="arch" type="xml">
+            <tree string="Type of Interactions" editable="bottom">
+                <field name="id" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record> -->
+    <!--    ### EMAIL INTERACTIONS TYPE OF INTERACTIONS END ###-->
+
+    <!--    ### ATTRITION AND BACKFILLS START ###-->
+    <record id="cs_portal_attrition_and_backfills_tree" model="ir.ui.view">
+        <field name="name">cs.portal.attrition.and.backfills.tree</field>
+        <field name="model">cs.portal.attrition.and.backfills</field>
+        <field name="arch" type="xml">
+            <tree string="Attrition and Backfills">
+                <field name="employee_id" />
+                <field name="employee_name" />
+                <field name="account_name" />
+                <field name="department" />
+                <field name="position" />
+                <field name="employment_status" />
+                <field name="date_hired" />
+                <field name="date_of_separation" />
+                <field name="separation_status_id" />
+                <field name="category" />
+                <field name="voluntary_involuntary" />
+                <field name="reason_for_separation_id" />
+                <field name="month" />
+                <field name="year" />
+                <field name="account_owner_id" />
+                <field name="attrition_category" />
+                <field name="backfill_attrition" />
+                <field name="voluntary" />
+                <field name="involuntary" />
+                <field name="backfilled_hc" />
+                <field name="account_owner_id" />
+                <field name="init_client_approach_date" />
+                <field name="backfills_confirmation" />
+                <field name="initial_remarks" />
+                <field name="req_id" />
+                <field name="progress_remarks" />
+                <field name="backfill_req_date" />
+                <field name="backfill_ageing" />
+                <field name="recruitment_action" />
+                <field name="filled_date" />
+                <field name="recruitment_ageing" />
+                <field name="status" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_attrition_and_backfills_form" model="ir.ui.view">
+        <field name="name">cs.portal.attrition.and.backfills.form</field>
+        <field name="model">cs.portal.attrition.and.backfills</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Employee Information">
+                        <field name="employee_id" />
+                        <field name="employee_name" />
+                        <field name="account_name" />
+                        <field name="department" />
+                        <field name="position" />
+                        <field name="employment_status" />
+                        <field name="date_hired" />
+                        <field name="date_of_separation" />
+                    </group>
+                    <group string="Additional Information">
+                        <field name="separation_status_id" />
+                        <field name="category" />
+                        <field name="voluntary_involuntary" />
+                        <field name="reason_for_separation_id" />
+                        <field name="month" />
+                        <field name="year" />
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        <field name="attrition_category" />
+                        <field name="backfill_attrition" />
+                        <field name="voluntary" />
+                        <field name="involuntary" />
+                        <field name="backfilled_hc" />
+                    </group>
+                    <group string="To be Updated by Client Services">
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        <field name="init_client_approach_date" />
+                        <field name="backfills_confirmation" />
+                        <field name="initial_remarks" />
+                        <field name="req_id" />
+                        <field name="progress_remarks" />
+                        <field name="backfill_req_date" />
+                        <field name="backfill_ageing" />
+                    </group>
+                    <group string="To be Updated by Recruitment">
+                        <field name="recruitment_action" />
+                        <field name="filled_date" />
+                        <field name="recruitment_ageing" />
+                    </group>
+                    <group>
+                        <field name="status" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### ATTRITION AND BACKFILLS END ###-->
+
+    <!--    ### RAW START  ###-->
+    <record id="cs_portal_raw_tree" model="ir.ui.view">
+        <field name="name">cs.portal.raw.tree</field>
+        <field name="model">cs.portal.raw</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="Raw">
+                <field name="x_account" optional="show" />
+                <field name="x_client_name_id" optional="show" />
+                <field name="x_position" optional="show" />
+                <field name="account_accountable_id" widget="many2many_tags" optional="show" />
+                <field name="x_decision_maker" optional="show" />
+                <field name="x_status" optional="show" />
+                <field name="x_account_type" optional="show" />
+                <field name="x_revenue" optional="show" />
+                <field name="x_space_type" optional="show" />
+
+                <field name="account_owner_id" optional="hide" />
+                <field name="secondary_owner_id" optional="hide" />
+                <field name="x_buyer" optional="hide" />
+                <field name="x_ap_responsibility" optional="hide" />
+                <field name="x_comments" optional="hide" />
+                <field name="x_clients_birthday" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_raw_form" model="ir.ui.view">
+        <field name="name">cs.portal.raw.form</field>
+        <field name="model">cs.portal.raw</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_account" />
+                            <field name="x_client_name_id" />
+                            <field name="x_position" />
+                            <field name="account_accountable_id" widget="many2many_tags"
+                                optional="show" />
+                            <field name="x_decision_maker" />
+                        </group>
+                        <group>
+                            <field name="x_status" />
+                            <field name="x_account_type" />
+                            <field name="x_revenue" />
+                            <field name="x_space_type" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--        ### RAW END ###-->
+
+    <!--        ### CSM VIEW START ###-->
+    <record id="cs_portal_csm_tree" model="ir.ui.view">
+        <field name="name">cs.portal.csm.tree</field>
+        <field name="model">cs.portal.raw</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="CSM">
+                <field name="x_account" optional="show" />
+                <field name="x_client_name_id" optional="show" />
+                <field name="x_position" optional="show" />
+                <field name="account_owner_id" optional="show" />
+                <field name="secondary_owner_id" optional="show" />
+                <field name="x_decision_maker" optional="show" />
+                <field name="x_status" optional="show" />
+                <field name="x_space_type" optional="show" />
+                <field name="x_buyer" optional="show" />
+                <field name="x_ap_responsibility" optional="show" />
+                <field name="x_comments" optional="show" />
+                <field name="x_clients_birthday" optional="show" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_csm_form" model="ir.ui.view">
+        <field name="name">cs.portal.csm.form</field>
+        <field name="model">cs.portal.raw</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_account" />
+                            <field name="x_client_name_id" />
+                            <field name="x_position" />
+                            <field name="account_owner_id" optional="show" />
+                            <field name="secondary_owner_id" optional="show" />
+                            <field name="x_decision_maker" />
+                        </group>
+                        <group>
+                            <field name="x_status" />
+                            <field name="x_space_type" />
+                            <field name="x_buyer" />
+                            <field name="x_ap_responsibility" />
+                            <field name="x_comments" />
+                            <field name="x_clients_birthday" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- ### CSM VIEW END ###-->
+
+    <!-- Sales Pipeline Stages Kanban View Start -->
+    <record id="cs_portal_sales_pipeline_kanban" model="ir.ui.view">
+        <field name="name">Sales Pipeline Stages</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="sales_pipeline_stage_id"
+                class="o_kanban_small_column o_test_kanban" on_create="quick_create"
+                quick_create_view="crm.quick_create_opportunity_form"
+                archivable="false" sample="1" create="false">
+                <field name="sales_pipeline_stage_id" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <strong class="o_kanban_record_title">
+                                    <span>
+                                        <!-- <field name="sales_pipeline_stage_id"/> -->
+                                    </span>
+                                </strong>
+                            </div>
+                            <div class="oe_kanban_card">
+                                <field name="account_name" />
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div>
+                                    <field name="account_status" />
+                                </div>
+                                <div>
+                                    <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                                </div>
+                                <div>
+                                    <field name="secondary_owner_id" domain="[('active_secondary_owner', '=', True)]"/>
+                                </div>
+                                <div>
+                                    <field name="tag_ids" widget="many2many_tags"
+                                        options="{'color_field': 'color'}" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Sales Pipeline Stage Kanban View End -->
+
+    <!-- General Pipeline Stages Kanban View Start -->
+    <record id="cs_portal_general_pipeline_kanban" model="ir.ui.view">
+        <field name="name">General Pipeline Stages</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="general_pipeline_stage_id"
+                class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create"
+                quick_create_view="crm.quick_create_opportunity_form"
+                archivable="false" sample="1" create="false">
+                <field name="general_pipeline_stage_id" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <strong class="o_kanban_record_title">
+                                    <span>
+                                        <!-- <field name="general_pipeline_stage_id"/> -->
+                                    </span>
+                                </strong>
+                            </div>
+                            <div class="oe_kanban_card">
+                                <field name="account_name" />
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div>
+                                    <field name="account_status" />
+                                </div>
+                                <div>
+                                    <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                                </div>
+                                <div>
+                                    <field name="secondary_owner_id" domain="[('active_secondary_owner', '=', True)]"/>
+                                </div>
+                                <div>
+                                    <field name="tag_ids" widget="many2many_tags"
+                                        options="{'color_field': 'color'}" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <groups>
+                    <!-- <group for="general_pipeline_stage_id" string="Stages">
+                        <group name="stage_1" string="Stage 1"/>
+                        <group name="stage_2" string="Stage 2"/>
+                    </group> -->
+                </groups>
+            </kanban>
+        </field>
+    </record>
+    <!-- Pipeline Stage Kanban View End -->
+
+    <!--    Log Notes View Start -->
+    <record id="cs_portal_logs_tree" model="ir.ui.view">
+        <field name="name">Logs Tree</field>
+        <field name="model">cs.portal.logs</field>
+        <field name="arch" type="xml">
+            <tree string="Logs">
+                <field name="user_id" />
+                <field name="updated_field" />
+                <field name="ov_final" />
+                <field name="nv_final" />
+                <field name="create_date" string="Updated On" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_logs_form" model="ir.ui.view">
+        <field name="name">Logs Form</field>
+        <field name="model">cs.portal.logs</field>
+        <field name="arch" type="xml">
+            <form string="Logs Form" class="o_logs_portal">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                    </div>
+                    <div class="oe_title">
+                        <div>
+                            <group>
+                                <field name="related_record_id" />
+                                <field name="field_type" groups="base.group_system" />
+                                <field name="user_id" />
+                            </group>
+                        </div>
+                        <group>
+                            <group string="Old Values" groups="base.group_system">
+                                <field name="ov_integer" />
+                                <field name="ov_float" />
+                                <field name="ov_char" />
+                                <field name="ov_text" />
+                                <field name="ov_date" />
+                                <field name="ov_datetime" />
+                                <field name="ov_html" />
+                            </group>
+                            <group string="New Values" groups="base.group_system">
+                                <field name="nv_integer" />
+                                <field name="nv_float" />
+                                <field name="nv_char" />
+                                <field name="nv_text" />
+                                <field name="nv_date" />
+                                <field name="nv_datetime" />
+                                <field name="nv_html" />
+                            </group>
+                            <group>
+                                <field name="ov_final" />
+                            </group>
+                            <group>
+                                <field name="nv_final" />
+                            </group>
+                            <group>
+                                <field name="create_date" />
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Log Notes View END -->
+
+    <!--    ### MASTER FILE START ###-->
+    <record id="cs_portal_master_file_tree" model="ir.ui.view">
+        <field name="name">cs.portal.master.file.tree</field>
+        <field name="model">cs.portal.master.file</field>
+        <field name="arch" type="xml">
+            <tree string="Master File">
+                <field name="employee_id" />
+                <field name="account_name" />
+                <field name="last_name" />
+                <field name="first_name" />
+                <field name="start_date" />
+                <field name="department" />
+                <field name="company" />
+                <field name="account_owner_id" />
+                <field name="status" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_master_file_form" model="ir.ui.view">
+        <field name="name">cs.portal.master.file.form</field>
+        <field name="model">cs.portal.master.file</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="employee_id" />
+                        <field name="account_name" />
+                        <field name="last_name" />
+                        <field name="first_name" />
+                        <field name="start_date" />
+                    </group>
+                    <group>
+                        <field name="department" />
+                        <field name="company" />
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                    </group>
+                    <group>
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### MASTER FILE END ###-->
+
+    <!--    ### GROWTH 2 START ###-->
+    <!-- <record id="cs_portal_growth_tree" model="ir.ui.view">
+        <field name="name">cs.portal.growth.tree</field>
+        <field name="model">cs.portal.growth</field>
+        <field name="arch" type="xml">
+            <tree string="Growth">
+                <field name="created_on" />
+                <field name="account_name" />
+                <field name="headcount_demand" />
+                <field name="job_title" />
+                <field name="req_id" />
+                <field name="req_status" />
+                <field name="req_position_classification" />
+                <field name="backfill" />
+                <field name="growth" />
+                <field name="new_1" />
+                <field name="growth_1" />
+                <field name="month" />
+                <field name="year" />
+                <field name="filter" />
+                <field name="month_count" />
+                <field name="account_grew" />
+                <field name="account_owner_id" />
+                <field name="status" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_growth_form" model="ir.ui.view">
+        <field name="name">cs.portal.gorwth.form</field>
+        <field name="model">cs.portal.growth</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="created_on" />
+                        <field name="account_name" />
+                        <field name="headcount_demand" />
+                        <field name="job_title" />
+                        <field name="req_id" />
+                        <field name="req_status" />
+                    </group>
+                    <group>
+                        <field name="req_position_classification" />
+                        <field name="backfill" />
+                        <field name="growth" />
+                        <field name="new_1" />
+                        <field name="growth_1" />
+                    </group>
+                    <group>
+                        <field name="month" />
+                        <field name="year" />
+                        <field name="filter" />
+                        <field name="month_count" />
+                        <field name="account_grew" />
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                    </group>
+                    <group>
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+    <!--    ### GROWTH 2 END ###-->
+    
+    <!--    ### GROWTH 2 START ###-->
+    <record id="cs_portal_growth_tree" model="ir.ui.view">
+        <field name="name">cs.portal.growth.tree</field>
+        <field name="model">cs.portal.growth</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="Growth">
+                <field name="created_on" />
+                <field name="ongoing_sourcing_date" />
+                <field name="calibration_availability" />
+                <field name="account_name" />
+                <field name="headcount_demand" />
+                <field name="hiring_manager" />
+                <field name="hiring_manager_email_address" />
+                <field name="job_title" />
+                <field name="requestor" />
+                <field name="req_id" />
+                <field name="req_status" />
+                <field name="salary_package" />
+                <field name="recruitment_manager" />
+                <field name="assigned_recruiter" />
+                <field name="industry" />
+                <field name="job_classification" />
+                <field name="req_position_classification" />
+                <field name="month" />
+                <field name="year" />
+                <field name="account_owner_id" />
+                <field name="count_backfill" />
+                <field name="status" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_growth_form" model="ir.ui.view">
+        <field name="name">cs.portal.gorwth.form</field>
+        <field name="model">cs.portal.growth</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="created_on" />
+                        <field name="ongoing_sourcing_date" />
+                        <field name="calibration_availability" />
+                        <field name="account_name" readonly="0"/>
+                        <field name="headcount_demand" />
+                        <field name="hiring_manager" />
+                        <field name="hiring_manager_email_address" />
+                        <field name="job_title" />
+                        <field name="requestor" />
+                        <field name="req_id" />
+                        <field name="req_status" />
+                        <field name="salary_package" />
+                        <field name="recruitment_manager" />
+                        <field name="assigned_recruiter" />
+                        <field name="industry" />
+                        <field name="job_classification" />
+                        <field name="req_position_classification" />
+                        <field name="month" readonly="0"/>
+                        <field name="year" readonly="0"/>
+                        <field name="account_owner_id" readonly="0"/>
+                        <field name="count_backfill" />
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### GROWTH 2 END ###-->
+
+    <!--    ### RECT TO CS TARGET START ###-->
+    <record id="cs_portal_rect_to_cs_target_tree" model="ir.ui.view">
+        <field name="name">cs.portal.rect.to.cs.target.tree</field>
+        <field name="model">cs.portal.rect.to.cs.target</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="Rect to CS Target">
+                <field name="month_count" />
+                <field name="month" />
+                <field name="year" />
+                <field name="recruitment" />
+                <field name="cs_sales" />
+                <field name="c2" />
+                <field name="met" />
+                <field name="account_grown" />
+                <field name="hc_actual" />
+                <field name="status" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_rect_to_cs_form" model="ir.ui.view">
+        <field name="name">cs.portal.rect.to.cs.target.form</field>
+        <field name="model">cs.portal.rect.to.cs.target</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="month_count" />
+                        <field name="month" />
+                        <field name="year" />
+                        <field name="recruitment" />
+                        <field name="cs_sales" />
+                    </group>
+                    <group>
+                        <field name="c2" />
+                        <field name="met" />
+                        <field name="account_grown" />
+                        <field name="hc_actual" />
+                    </group>
+                    <group>
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### RECT TO CS TARGET END ###-->
+
+    <!--    ### ACTIVE CLIENTS START ###-->
+    <record id="cs_portal_active_clients_tree" model="ir.ui.view">
+        <field name="name">cs.portal.active.clients.tree</field>
+        <field name="model">cs.portal.active.clients</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="Rect to CS Target">
+                <field name="account_owner_id" />
+                <field name="account_status" />
+                <field name="month" />
+                <field name="account_name" />
+                <field name="account" />
+                <field name="running_hc" />
+                <field name="year" />
+                <field name="attrition_voluntary" />
+                <field name="attrition_involuntary" />
+                <field name="attrition_hc_per_account" />
+                <field name="backfill_share" widget="percentage"/>
+                <field name="backfilled_hc_per_account" />
+                <field name="backfilled_hc" />
+                <!-- <field name="backfilled_hc_per_dec" />
+                <field name="backfilled_hc_per_jan" />
+                <field name="backfilled_hc_per_feb" /> -->
+                <field name="backfilled_hc_per_feb" />
+                <field name="backfilled_hc_per_mar" />
+                <field name="backfilled_hc_per_apr" />
+                <field name="backfilled_hc_per_may" />
+                <field name="backfilled_hc_per_jun" />
+                <field name="growth_hc" />
+                <field name="growth_share" />
+                <field name="segment" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_active_clients_form" model="ir.ui.view">
+        <field name="name">cs.portal.active.clients.form</field>
+        <field name="model">cs.portal.active.clients</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        <field name="account_status" />
+                        <field name="month" />
+                        <field name="account_name" />
+                        <field name="account" />
+                        <field name="running_hc" />
+                        <field name="year" />
+                        <field name="attrition_voluntary" />
+                        <field name="attrition_involuntary" />
+                        <field name="attrition_hc_per_account" />
+                        <field name="backfill_share" widget="percentage"/>
+                        <field name="backfilled_hc_per_account" />
+                        <field name="backfilled_hc" />
+                        <!-- <field name="backfilled_hc_per_dec" />
+                        <field name="backfilled_hc_per_jan" />
+                        <field name="backfilled_hc_per_feb" /> -->
+                        <field name="backfilled_hc_per_feb" />
+                        <field name="backfilled_hc_per_mar" />
+                        <field name="backfilled_hc_per_apr" />
+                        <field name="backfilled_hc_per_may" />
+                        <field name="backfilled_hc_per_jun" />
+                        <field name="growth_hc" />
+                        <field name="growth_share" />
+                        <field name="growth_client_hc" />
+                        <field name="segment" />
+                        <!-- <field name="growth_client_jan" />
+                        <field name="growth_client_feb" />
+                        <field name="growth_client_dec" /> -->
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### ACTIVE CLIENTS END ###-->
+
+    <!--    ### OVERALL START ###-->
+    <record id="cs_portal_overall_tree" model="ir.ui.view">
+        <field name="name">cs.portal.overall.tree</field>
+        <field name="model">cs.portal.overall</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" string="Overall">
+                <field name="month"/>
+                <field name="account_owner_id" />
+                <field name="mbr_conducted" />
+                <field name="mbr_scheduled" />
+                <field name="mbr_target" />
+                <field name="mbr_actual" />
+                <field name="backfill_attrition" />
+                <field name="backfill_backfilled" />
+                <field name="backfill_actual" />
+                <field name="req_overall" />
+                <field name="req_target" />
+                <field name="req_backfill" />
+                <field name="req_cancelled" />
+                <field name="req_growth" />
+                <field name="req_new" />
+                <field name="dormant_accounts" />
+                <field name="clients_grown" />
+                <field name="clients_grown_percentage" />
+                <field name="csat_score" />
+                <field name="csat_res_count" />
+                <field name="num_of_audit" />
+                <field name="num_of_recordings" />
+                <field name="quality_assurance" />
+                <field name="nps_score" />
+                <field name="nps_promoter" />
+                <field name="nps_passive" />
+                <field name="nps_detractor" />
+                <field name="small" />
+                <field name="medium" />
+                <field name="large" />
+                <field name="small_percentage" />
+                <field name="medium_percentage" />
+                <field name="large_percentage" />
+                <field name="client_assignment" />
+                <field name="hc_population" />
+                <field name="status" />
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cs_portal_overall_form" model="ir.ui.view">
+        <field name="name">cs.portal.overall.form</field>
+        <field name="model">cs.portal.overall</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="month" />
+                        <field name="account_owner_id" domain="[('active_account_owner', '=', True)]"/>
+                        <field name="mbr_conducted" />
+                        <field name="mbr_scheduled" />
+                        <field name="mbr_target" />
+                        <field name="mbr_actual" />
+                    </group>
+                    <group>
+                        <field name="backfill_attrition" />
+                        <field name="backfill_backfilled" />
+                        <field name="backfill_actual" />
+                    </group>
+                    <group>
+                        <field name="req_overall" />
+                        <field name="req_target" />
+                        <field name="req_backfill" />
+                        <field name="req_cancelled" />
+                        <field name="req_growth" />
+                        <field name="req_new" />
+                    </group>
+                    <group>
+                        <field name="dormant_accounts" />
+                        <field name="clients_grown" />
+                        <field name="clients_grown_percentage" />
+                    </group>
+                    <group>
+                        <field name="csat_score" />
+                        <field name="csat_res_count" />
+                    </group>
+                    <group>
+                        <field name="num_of_audit" />
+                        <field name="num_of_recordings" />
+                    </group>
+                    <group>
+                        <field name="quality_assurance" />
+                        <field name="nps_score" />
+                        <field name="nps_promoter" />
+                        <field name="nps_passive" />
+                        <field name="nps_detractor" />
+                    </group>
+                    <group>
+                        <field name="small" />
+                        <field name="medium" />
+                        <field name="large" />
+                        <field name="small_percentage" />
+                        <field name="medium_percentage" />
+                        <field name="large_percentage" />
+                    </group>
+                    <group>
+                        <field name="client_assignment" />
+                        <field name="hc_population" />
+                    </group>
+                    <group>
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ### OVERALL END ###-->
+
+    <!-- Search Filter and Archive for General Pipeline Stage START -->
+    <record id="cs_portal_general_pipeline_stage_search" model="ir.ui.view">
+        <field name="name">cs.general.pipeline.stage.search</field>
+        <field name="model">cs.portal.general.pipeline</field>
+        <field name="arch" type="xml">
+            <search string="General Pipeline Stages">
+                <field name="name" string="Stage" />
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+    <!-- Search Filter and Archive for General Pipeline Stages END -->
+
+    <!-- Search Filter and Archive for Sales Pipeline Stage START -->
+    <record id="cs_portal_sales_pipeline_stage_search" model="ir.ui.view">
+        <field name="name">cs.sales.pipeline.stage.search</field>
+        <field name="model">cs.portal.sales.pipeline</field>
+        <field name="arch" type="xml">
+            <search string="Sales Pipeline Stages">
+                <field name="name" />
+
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+    <!-- Search Filter and Archive for CS Sales Pipeline Stages END -->
+
+    <!--    Search Filter and Archive for CS Clients START-->
+    <record id="cs_portal_search_view" model="ir.ui.view">
+        <field name="name">cs.search.view</field>
+        <field name="model">cs.portal.main</field>
+        <field name="arch" type="xml">
+            <search string="Clients">
+                <field name="account_name" string="Account Name" />
+                <filter string="My Accounts" name="my_accounts"
+                    domain="['|', ('account_owner_id.user_id', '=', uid), ('secondary_owner_id.user_id', '=', uid)]" />
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+                <separator/>
+                <filter string="Active Clients" name="active_clients" domain="[('account_status', '=', 'active' )]"/>
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter string="Account Owner" name="account_owner"
+                        context="{'group_by':'account_owner_id'}" />
+                    <filter string="Secondary Owner" name="secondary_owner"
+                        context="{'group_by':'secondary_owner_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Search Filter and Archive for CS Clients END -->
+
+    <!-- Search Filter and Archive for CS Account Owner START -->
+    <record id="cs_portal_account_owner_search" model="ir.ui.view">
+        <field name="name">cs.account.owner.search</field>
+        <field name="model">cs.portal.account.owner</field>
+        <field name="arch" type="xml">
+            <search string="Account Owner">
+                <field name="account_owner_ids" string="Account Owner Reference" />
+
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+    <!--  Search Filter and Archive for CS Account Owner END -->
+
+    <!-- Search Filter and Archive for CS Secondary Owner START -->
+    <record id="cs_portal_secondary_owner_search" model="ir.ui.view">
+        <field name="name">cs.secondary.owner.search</field>
+        <field name="model">cs.portal.secondary.owner</field>
+        <field name="arch" type="xml">
+            <search string="Secondary Owner">
+                <field name="account_owner_ids" string="Secondary Owner Reference" />
+
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+    <!--  Search Filter and Archive for CS Secondary Owner END -->
+
+    <!--    Search Filter and Archive for CS Client Interactions START -->
+    <record id="cs_portal_client_interaction_search" model="ir.ui.view">
+        <field name="name">cs.portal.client.interactions.search</field>
+        <field name="model">cs.portal.client.interactions</field>
+        <field name="arch" type="xml">
+            <search string="Client Interactions">
+                <field name="deliverables" string="Deliverables" />
+
+                <separator />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+    <!-- Search Filter and Archive for CS Client Interactions END -->
+
+</odoo>
